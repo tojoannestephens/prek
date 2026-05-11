@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { Check, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Check, Send } from "lucide-react";
 
 const RATINGS = [
   { value: 1, emoji: "😞", label: "Poor" },
@@ -19,101 +17,117 @@ export default function Feedback() {
 
   if (submitted) {
     return (
-      <div className="px-5 pt-16 flex flex-col items-center text-center" data-testid="feedback-thanks">
+      <div
+        className="flex flex-col items-center justify-center px-8"
+        style={{ minHeight: "calc(100vh - 140px)" }}
+        data-testid="feedback-thanks"
+      >
         <div
-          className="w-20 h-20 rounded-full flex items-center justify-center"
-          style={{ background: "#2F855A" }}
+          className="rounded-full flex items-center justify-center mb-6"
+          style={{ width: 96, height: 96, background: "#145261" }}
         >
-          <Check size={42} color="#FFFFFF" strokeWidth={3} />
+          <Check size={48} color="#FFFFFF" strokeWidth={3} />
         </div>
-        <h1 className="mt-6 font-display text-4xl" style={{ color: "#092936", fontWeight: 700 }}>
+        <h1 className="font-extrabold mb-3 text-center" style={{ color: "#092936", fontSize: 28 }}>
           Thank You!
         </h1>
-        <p className="mt-3 text-[15px] leading-relaxed max-w-sm" style={{ color: "#3D5560" }}>
-          Your feedback helps us shape an even better Pre K professional development experience. We appreciate every word.
+        <p className="text-center mb-6" style={{ color: "#5A6A72", fontSize: 15, lineHeight: "22px" }}>
+          Your feedback fuels our growth. We appreciate you taking the time to share your thoughts today.
         </p>
-        <div className="mt-12 flex items-center gap-2 px-4 py-2 rounded-full" style={{ background: "#F6B829", color: "#092936" }}>
-          <Star size={14} fill="#092936" strokeWidth={0} />
-          <span className="text-xs font-bold tracking-wider uppercase">Success Starts Here</span>
-        </div>
+        <p className="font-extrabold tracking-[0.15em]" style={{ color: "#145261", fontSize: 13 }}>
+          SUCCESS STARTS HERE
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="px-5 pt-8" data-testid="feedback-page">
-      <h1 className="font-display text-4xl" style={{ color: "#092936", fontWeight: 700 }}>
+    <div className="p-4 pb-10" data-testid="feedback-screen">
+      <h2 className="font-extrabold mb-1" style={{ color: "#092936", fontSize: 22 }}>
         Share Your Feedback
-      </h1>
-      <p className="mt-2 text-[15px]" style={{ color: "#3D5560" }}>
+      </h2>
+      <p className="mb-5" style={{ color: "#5A6A72", fontSize: 14 }}>
         A quick evaluation helps us plan even better events.
       </p>
 
-      <div className="mt-7">
-        <p className="text-[13px] font-bold uppercase tracking-wider" style={{ color: "#145261" }}>
-          Overall Experience
-        </p>
-        <div className="mt-3 grid grid-cols-5 gap-2" data-testid="rating-row">
-          {RATINGS.map((r) => {
-            const active = rating === r.value;
-            return (
-              <button
-                key={r.value}
-                onClick={() => setRating(r.value)}
-                data-testid={`rating-${r.value}`}
-                className="flex flex-col items-center py-3 rounded-xl border-2 transition-all"
-                style={{
-                  background: active ? "#FFF4D9" : "#FFFFFF",
-                  borderColor: active ? "#F6B829" : "#E8DFCF",
-                }}
-              >
-                <span className="text-2xl">{r.emoji}</span>
-                <span className="mt-1 text-[10px] font-bold uppercase tracking-wide" style={{ color: "#3D5560" }}>
-                  {r.label}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+      <p className="font-bold mb-2.5 mt-2" style={{ color: "#092936", fontSize: 14 }}>
+        How was today?
+      </p>
+      <div className="flex justify-between gap-1.5 mb-4">
+        {RATINGS.map((r) => {
+          const active = rating === r.value;
+          return (
+            <button
+              key={r.value}
+              onClick={() => setRating(r.value)}
+              data-testid={`rating-${r.value}`}
+              className="flex-1 flex flex-col items-center py-3 rounded-[12px] transition-all"
+              style={{
+                background: active ? "#FDF4DC" : "#FFFFFF",
+                border: `2px solid ${active ? "#F6B829" : "rgba(20,82,97,0.15)"}`,
+              }}
+            >
+              <span style={{ fontSize: 28 }}>{r.emoji}</span>
+              <span className="font-semibold mt-1" style={{ color: active ? "#092936" : "#5A6A72", fontSize: 10 }}>
+                {r.label}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
-      <div className="mt-6">
-        <label className="text-[13px] font-bold uppercase tracking-wider" style={{ color: "#145261" }}>
-          What was the highlight?
-        </label>
-        <Textarea
-          value={highlight}
-          onChange={(e) => setHighlight(e.target.value)}
-          placeholder="Tell us what stood out…"
-          className="mt-2 bg-white border-[#E8DFCF] rounded-xl text-[14px]"
-          rows={3}
-          data-testid="feedback-highlight"
-        />
-      </div>
+      <p className="font-bold mb-2.5 mt-2" style={{ color: "#092936", fontSize: 14 }}>
+        What was the highlight?
+      </p>
+      <textarea
+        value={highlight}
+        onChange={(e) => setHighlight(e.target.value)}
+        placeholder="A favorite session, takeaway, or moment..."
+        className="w-full bg-white rounded-[12px] border p-3.5 mb-2 outline-none"
+        style={{
+          borderColor: "rgba(20,82,97,0.15)",
+          minHeight: 90,
+          fontSize: 14,
+          color: "#092936",
+          resize: "vertical",
+        }}
+        data-testid="feedback-highlight"
+      />
 
-      <div className="mt-5">
-        <label className="text-[13px] font-bold uppercase tracking-wider" style={{ color: "#145261" }}>
-          What could be even better?
-        </label>
-        <Textarea
-          value={improve}
-          onChange={(e) => setImprove(e.target.value)}
-          placeholder="Your suggestions help us improve…"
-          className="mt-2 bg-white border-[#E8DFCF] rounded-xl text-[14px]"
-          rows={3}
-          data-testid="feedback-improve"
-        />
-      </div>
+      <p className="font-bold mb-2.5 mt-2" style={{ color: "#092936", fontSize: 14 }}>
+        What could be even better?
+      </p>
+      <textarea
+        value={improve}
+        onChange={(e) => setImprove(e.target.value)}
+        placeholder="Suggestions, ideas, or wishes..."
+        className="w-full bg-white rounded-[12px] border p-3.5 mb-2 outline-none"
+        style={{
+          borderColor: "rgba(20,82,97,0.15)",
+          minHeight: 90,
+          fontSize: 14,
+          color: "#092936",
+          resize: "vertical",
+        }}
+        data-testid="feedback-improve"
+      />
 
-      <Button
-        onClick={() => setSubmitted(true)}
+      <button
+        onClick={() => rating && setSubmitted(true)}
+        disabled={!rating}
         data-testid="feedback-submit"
-        className="mt-7 w-full h-12 rounded-xl font-bold text-base"
-        style={{ background: "#F6B829", color: "#092936" }}
+        className="w-full flex items-center justify-center gap-2 py-4 rounded-[14px] mt-5 transition-opacity"
+        style={{
+          background: "#F6B829",
+          color: "#092936",
+          opacity: !rating ? 0.6 : 1,
+        }}
       >
-        Submit Feedback
-      </Button>
-      <div className="h-8" />
+        <Send size={18} color="#092936" />
+        <span className="font-extrabold" style={{ fontSize: 16 }}>
+          Submit Feedback
+        </span>
+      </button>
     </div>
   );
 }

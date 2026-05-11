@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
-import { ExternalLink, LinkIcon } from "lucide-react";
+import { Link2, FileText, ExternalLink } from "lucide-react";
 
 export default function Resources() {
   const [items, setItems] = useState([]);
@@ -10,37 +10,40 @@ export default function Resources() {
   }, []);
 
   return (
-    <div className="px-5 pt-8" data-testid="resources-page">
-      <h1 className="font-display text-4xl" style={{ color: "#092936", fontWeight: 700 }}>
+    <div className="p-4 pb-10" data-testid="resources-screen">
+      <h2 className="font-extrabold mb-1" style={{ color: "#092936", fontSize: 22 }}>
         Resources
-      </h1>
-
-      <h2 className="mt-7 text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: "#145261" }}>
-        Links
       </h2>
 
-      <div className="mt-3 space-y-2.5" data-testid="resources-list">
-        {items.map((r, i) => {
+      <div className="mt-5">
+        <div className="flex items-center gap-2.5 mb-2.5">
+          <div
+            className="rounded-[10px] flex items-center justify-center"
+            style={{ width: 40, height: 40, background: "#145261" }}
+          >
+            <Link2 size={20} color="#FFFFFF" strokeWidth={2.2} />
+          </div>
+          <h3 className="font-extrabold" style={{ color: "#092936", fontSize: 16 }}>
+            Links
+          </h3>
+        </div>
+
+        {items.map((r, idx) => {
           const hasUrl = r.url && r.url.trim().length > 0;
-          const inner = (
+          const content = (
             <>
-              <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: "#F4EFE6", color: "#145261" }}
-              >
-                <LinkIcon size={18} strokeWidth={2.2} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-display text-[17px] leading-tight" style={{ color: "#092936", fontWeight: 600 }}>
+              <FileText size={18} color="#145261" className="flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="font-semibold" style={{ color: "#092936", fontSize: 14 }}>
                   {r.title}
-                </h3>
+                </p>
                 {r.description && (
-                  <p className="mt-1 text-[13px] leading-relaxed" style={{ color: "#6B7B82" }}>
+                  <p className="mt-1" style={{ color: "#5A6A72", fontSize: 12, lineHeight: "17px" }}>
                     {r.description}
                   </p>
                 )}
               </div>
-              {hasUrl && <ExternalLink size={18} style={{ color: "#145261" }} className="flex-shrink-0" />}
+              <ExternalLink size={16} color="#5A6A72" className="flex-shrink-0 mt-0.5" />
             </>
           );
           return hasUrl ? (
@@ -49,23 +52,24 @@ export default function Resources() {
               href={r.url}
               target="_blank"
               rel="noopener noreferrer"
-              data-testid={`resource-${i}`}
-              className="bg-white border border-[#E8DFCF] rounded-2xl px-4 py-3.5 flex items-center gap-3 hover:border-[#145261] transition-colors"
+              data-testid={`resource-${idx}`}
+              className="flex items-start gap-2.5 bg-white p-3 rounded-[10px] mb-2 border"
+              style={{ borderColor: "rgba(20,82,97,0.15)" }}
             >
-              {inner}
+              {content}
             </a>
           ) : (
             <div
               key={r.id}
-              data-testid={`resource-${i}`}
-              className="bg-white border border-[#E8DFCF] rounded-2xl px-4 py-3.5 flex items-center gap-3 opacity-75"
+              data-testid={`resource-${idx}`}
+              className="flex items-start gap-2.5 bg-white p-3 rounded-[10px] mb-2 border"
+              style={{ borderColor: "rgba(20,82,97,0.15)" }}
             >
-              {inner}
+              {content}
             </div>
           );
         })}
       </div>
-      <div className="h-8" />
     </div>
   );
 }

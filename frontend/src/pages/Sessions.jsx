@@ -1,67 +1,82 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
-import { MapPin, Shield, Sparkles, BookOpen, Glasses } from "lucide-react";
+import { Sparkles, Glasses, Wand2, ShieldCheck, Smile, MapPin } from "lucide-react";
 
-const iconFor = (title) => {
-  if (title.includes("Policy")) return Shield;
-  if (title.includes("MagicSchool")) return Sparkles;
-  if (title.includes("Technology")) return BookOpen;
-  if (title.includes("VR")) return Glasses;
-  return BookOpen;
+const ICON_MAP = {
+  vr: Glasses,
+  wand: Wand2,
+  shield: ShieldCheck,
+  kids: Smile,
+  sparkles: Sparkles,
 };
+
+const ACCENTS = ["#145261", "#F6B829", "#541011", "#092936"];
 
 export default function Sessions() {
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get("/sessions").then((r) => {
-      const sorted = [...r.data].sort((a, b) => a.title.localeCompare(b.title));
-      setItems(sorted);
-    }).catch(() => {});
+    api.get("/sessions").then((r) => { setItems(r.data); setLoading(false); }).catch(() => setLoading(false));
   }, []);
 
+  if (loading) {
+    return <div className="flex justify-center items-center pt-20"><div className="w-8 h-8 border-2 border-[#145261] border-t-transparent rounded-full animate-spin" /></div>;
+  }
+
   return (
-    <div className="px-5 pt-8" data-testid="sessions-page">
-      <h1 className="font-display text-4xl" style={{ color: "#092936", fontWeight: 700 }}>
+    <div className="p-4 pb-10" data-testid="sessions-screen">
+      <h2 className="font-extrabold mb-1" style={{ color: "#092936", fontSize: 22 }}>
         Today's Sessions
-      </h1>
-      <p className="mt-2 text-[15px]" style={{ color: "#3D5560" }}>
+      </h2>
+      <p className="mb-5" style={{ color: "#5A6A72", fontSize: 14 }}>
         Four powerful breakouts.
       </p>
 
-      <div className="mt-6 space-y-3" data-testid="sessions-list">
-        {items.map((s, i) => {
-          const Icon = iconFor(s.title);
-          return (
-            <div
-              key={s.id}
-              className="bg-white border border-[#E8DFCF] rounded-2xl px-5 py-5"
-              data-testid={`session-card-${i}`}
-            >
-              <div className="flex items-start gap-4">
-                <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: "#F4EFE6", color: "#145261" }}
-                >
-                  <Icon size={20} strokeWidth={2.2} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-display text-lg leading-snug" style={{ color: "#092936", fontWeight: 700 }}>
-                    {s.title}
-                  </h3>
-                  <div className="mt-1 inline-flex items-center gap-1 text-[12px] font-semibold" style={{ color: "#145261" }}>
-                    <MapPin size={12} /> {s.location}
-                  </div>
-                  <p className="mt-2.5 text-[14px] leading-relaxed" style={{ color: "#3D5560" }}>
-                    {s.description}
-                  </p>
+      {items.map((s, idx) => {
+        const accent = ACCENTS[idx % ACCENTS.length];
+        const Icon = ICON_MAP[s.icon] || iconForTitle(s.title);
+        const darkOnGold = accent === "#F6B829";
+        return (
+          <div
+            key={s.id}
+            className="bg-white rounded-[16px] p-4 mb-3.5 card-shadow"
+            style={{ borderLeft: `5px solid ${accent}` }}
+            data-testid={`session-${idx}`}
+          >
+            <div className="flex items-center mb-2.5 gap-3">
+              <div
+                className="rounded-[12px] flex items-center justify-center flex-shrink-0"
+                style={{ width: 46, height: 46, background: accent }}
+              >
+                <Icon size={22} color={darkOnGold ? "#092936" : "#FFFFFF"} strokeWidth={2.2} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-extrabold" style={{ color: "#092936", fontSize: 17 }}>
+                  {s.title}
+                </h3>
+                <div className="flex items-center gap-1 mt-0.5">
+                  <MapPin size={14} color={accent} />
+                  <span className="font-bold" style={{ color: accent, fontSize: 13 }}>
+                    {s.location}
+                  </span>
                 </div>
               </div>
             </div>
-          );
-        })}
-      </div>
-      <div className="h-8" />
+            <p style={{ color: "#5A6A72", fontSize: 14, lineHeight: "21px" }}>
+              {s.description}
+            </p>
+          </div>
+        );
+      })}
     </div>
   );
+}
+
+function iconForTitle(title) {
+  if (title.includes("VR")) return Glasses;
+  if (title.includes("MagicSchool")) return Wand2;
+  if (title.includes("Policy")) return ShieldCheck;
+  if (title.includes("Technology")) return Smile;
+  return Sparkles;
 }

@@ -1,61 +1,63 @@
 import { Link } from "react-router-dom";
-import { MapPin, BookOpen, MessageSquare, Lock, ChevronRight } from "lucide-react";
+import { MapPin, BookMarked, MessageCircle, Lock, ChevronRight } from "lucide-react";
 
-const ROWS = [
-  { to: "/locations", label: "Locations", desc: "Find rooms and sessions", Icon: MapPin, color: "#145261" },
-  { to: "/resources", label: "Resources", desc: null, Icon: BookOpen, color: "#541011" },
-  { to: "/feedback", label: "Feedback", desc: "Share your thoughts", Icon: MessageSquare, color: "#F6B829" },
-  { to: "/admin", label: "Admin", desc: "PIN-protected editing", Icon: Lock, color: "#092936" },
+const ITEMS = [
+  { label: "Locations", desc: "Find rooms and sessions", Icon: MapPin, route: "/locations", color: "#145261" },
+  { label: "Resources", desc: "", Icon: BookMarked, route: "/resources", color: "#F6B829" },
+  { label: "Feedback", desc: "Share your thoughts", Icon: MessageCircle, route: "/feedback", color: "#541011" },
+  { label: "Admin", desc: "PIN-protected editing", Icon: Lock, route: "/admin", color: "#092936" },
 ];
 
 export default function More() {
   return (
-    <div className="px-5 pt-8" data-testid="more-page">
-      <h1 className="font-display text-4xl" style={{ color: "#092936", fontWeight: 700 }}>
-        More
-      </h1>
-
-      <div className="mt-6 space-y-3" data-testid="more-list">
-        {ROWS.map((r) => {
-          const Icon = r.Icon;
-          const dark = r.color === "#F6B829";
-          return (
-            <Link
-              key={r.to}
-              to={r.to}
-              data-testid={`more-${r.label.toLowerCase()}`}
-              className="bg-white border border-[#E8DFCF] rounded-2xl px-4 py-4 flex items-center gap-4 hover:border-[#145261] transition-colors"
-            >
-              <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: r.color, color: dark ? "#092936" : "#FFFFFF" }}
-              >
-                <Icon size={20} strokeWidth={2.2} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-display text-lg leading-tight" style={{ color: "#092936", fontWeight: 700 }}>
-                  {r.label}
-                </h3>
-                {r.desc && (
-                  <p className="text-[13px]" style={{ color: "#6B7B82" }}>
-                    {r.desc}
-                  </p>
-                )}
-              </div>
-              <ChevronRight size={20} style={{ color: "#6B7B82" }} />
-            </Link>
-          );
-        })}
-      </div>
-
+    <div className="p-4 pb-10" data-testid="more-screen">
       <p
-        className="mt-10 text-center text-[12px]"
-        style={{ color: "#6B7B82" }}
-        data-testid="more-footer"
+        className="font-extrabold tracking-[0.15em] uppercase mb-3"
+        style={{ color: "#145261", fontSize: 12 }}
       >
-        Success Starts Here · Nurture. Guide. Empower. · 2026
+        Explore More
       </p>
-      <div className="h-8" />
+
+      {ITEMS.map((it) => {
+        const Icon = it.Icon;
+        const dark = it.color === "#F6B829";
+        return (
+          <Link
+            key={it.label}
+            to={it.route}
+            data-testid={`more-${it.label.toLowerCase()}`}
+            className="flex items-center bg-white rounded-[14px] p-3.5 mb-2.5 border"
+            style={{ borderColor: "rgba(20,82,97,0.15)" }}
+          >
+            <div
+              className="rounded-[12px] flex items-center justify-center mr-3"
+              style={{ width: 44, height: 44, background: it.color }}
+            >
+              <Icon size={22} color={dark ? "#092936" : "#FFFFFF"} strokeWidth={2.2} />
+            </div>
+            <div className="flex-1">
+              <p className="font-bold" style={{ color: "#092936", fontSize: 16 }}>
+                {it.label}
+              </p>
+              {it.desc && (
+                <p className="mt-0.5" style={{ color: "#5A6A72", fontSize: 13 }}>
+                  {it.desc}
+                </p>
+              )}
+            </div>
+            <ChevronRight size={22} color="#5A6A72" />
+          </Link>
+        );
+      })}
+
+      <div className="flex flex-col items-center mt-8">
+        <p className="font-extrabold tracking-[0.1em]" style={{ color: "#145261", fontSize: 14 }}>
+          Success Starts Here
+        </p>
+        <p className="mt-1" style={{ color: "#5A6A72", fontSize: 12 }}>
+          Nurture. Guide. Empower. · 2026
+        </p>
+      </div>
     </div>
   );
 }

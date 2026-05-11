@@ -1,192 +1,162 @@
 import { Link } from "react-router-dom";
-import { Star, CalendarDays, Users, BookOpen, MapPin } from "lucide-react";
+import { Star, Calendar, Users, Sparkles, MapPin, Info } from "lucide-react";
 
+const HERO_BG = "https://images.unsplash.com/photo-1755538497211-c4ebc7cc1a94?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMHRlY2hub2xvZ3klMjBlZHVjYXRpb24lMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc3NzIzNTU2MHww&ixlib=rb-4.1.0&q=85";
 const TALA_LOGO = "https://customer-assets.emergentagent.com/job_deploy-base44/artifacts/4fzpi86t_tala.jpg";
-const BCS_LOGO = "https://cmsv2-assets.apptegy.net/uploads/21908/watermark/24722/logo_birmingham.png";
+const BCS_LOGO = "https://raw.githubusercontent.com/tojoannestephens/prek/prek/frontend/assets/images/bcs-logo.png";
 
 export default function Home() {
+  const quickActions = [
+    { label: "Agenda", icon: Calendar, route: "/agenda", color: "#145261", testid: "quick-agenda" },
+    { label: "My Group", icon: Users, route: "/group", color: "#F6B829", testid: "quick-my-group" },
+    { label: "Sessions", icon: Sparkles, route: "/sessions", color: "#541011", testid: "quick-sessions" },
+    { label: "Locations", icon: MapPin, route: "/locations", color: "#092936", testid: "quick-locations" },
+  ];
+
   return (
-    <div data-testid="home-page" className="pb-2">
-      {/* HERO */}
-      <section
-        className="relative overflow-hidden grain"
-        style={{
-          background:
-            "linear-gradient(180deg, #092936 0%, #0E3D49 55%, #145261 100%)",
-        }}
-        data-testid="home-hero"
+    <div data-testid="home-screen" className="pb-2">
+      {/* HERO with image background */}
+      <div
+        className="relative overflow-hidden mx-0"
+        style={{ minHeight: 360, borderBottomLeftRadius: 28, borderBottomRightRadius: 28 }}
       >
-        <div className="relative z-10 px-6 pt-8 pb-12">
-          <div className="flex items-start justify-between">
-            <div
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full"
-              style={{ background: "#F6B829", color: "#092936" }}
-              data-testid="success-pill"
-            >
-              <Star size={14} fill="#092936" strokeWidth={0} />
-              <span className="text-xs font-bold tracking-wider uppercase">
-                Success Starts Here
-              </span>
-            </div>
-            <div
-              className="bg-white rounded-2xl p-1.5 shadow-md"
-              data-testid="bcs-logo"
-            >
-              <img src={BCS_LOGO} alt="Birmingham City Schools" className="h-10 w-10 object-contain" />
-            </div>
+        <img
+          src={HERO_BG}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ borderBottomLeftRadius: 28, borderBottomRightRadius: 28 }}
+        />
+        <div
+          className="relative px-6 pt-8 pb-8 flex flex-col justify-end"
+          style={{
+            minHeight: 360,
+            background: "rgba(9, 41, 54, 0.78)",
+            borderBottomLeftRadius: 28,
+            borderBottomRightRadius: 28,
+          }}
+          data-testid="home-hero"
+        >
+          <img
+            src={BCS_LOGO}
+            alt="BCS"
+            className="absolute object-contain"
+            style={{
+              top: 16,
+              right: 16,
+              width: 72,
+              height: 72,
+              background: "rgba(255,255,255,0.95)",
+              borderRadius: 16,
+              padding: 6,
+            }}
+            data-testid="bcs-logo"
+          />
+
+          <div
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full self-start mb-4"
+            style={{ background: "#F6B829" }}
+            data-testid="success-pill"
+          >
+            <Star size={14} fill="#092936" strokeWidth={0} color="#092936" />
+            <span className="text-[12px] font-extrabold tracking-wider" style={{ color: "#092936" }}>
+              Success Starts Here
+            </span>
           </div>
 
-          <h1
-            className="font-display text-white mt-7 leading-[0.95] text-5xl sm:text-6xl font-700"
-            style={{ fontWeight: 700 }}
-            data-testid="home-headline"
-          >
+          <h1 className="text-white font-extrabold mb-2" style={{ fontSize: 44, lineHeight: "48px" }} data-testid="home-headline">
             Nurture.<br />Guide.<br />Empower.
           </h1>
 
-          <p
-            className="font-display mt-5 text-2xl sm:text-3xl"
-            style={{ color: "#F6B829", fontWeight: 600 }}
-            data-testid="home-subheadline"
-          >
+          <p className="font-bold mb-3" style={{ color: "#F6B829", fontSize: 16 }} data-testid="home-subheadline">
             AI in Teaching &amp; Learning
           </p>
 
-          <p
-            className="mt-5 text-[15px] leading-relaxed max-w-md"
-            style={{ color: "#E2EBEE" }}
-            data-testid="home-welcome"
-          >
-            Welcome, Pre K educators! Today we explore how AI can support,
-            inspire, and elevate early childhood teaching.
+          <p style={{ color: "rgba(255,255,255,0.92)", fontSize: 15, lineHeight: "22px" }} data-testid="home-welcome">
+            Welcome, Pre K educators! Today we explore how AI can support, inspire, and elevate early childhood teaching.
           </p>
         </div>
-      </section>
+      </div>
 
-      {/* TALA SPONSOR */}
-      <section className="px-5 -mt-6 relative z-20">
+      {/* TALA SPONSOR CARD */}
+      <div className="px-5 mt-6">
         <div
-          className="rounded-2xl bg-white border border-[#E8DFCF] shadow-sm px-6 py-6 flex flex-col items-center text-center"
-          data-testid="tala-sponsor-card"
+          className="bg-white rounded-2xl border flex flex-col items-center justify-center py-3 px-3"
+          style={{ borderColor: "rgba(20,82,97,0.15)" }}
+          data-testid="tala-sponsor"
         >
           <span
-            className="text-[11px] font-bold tracking-[0.18em] uppercase"
+            className="text-[11px] font-extrabold tracking-[0.15em] mb-0.5"
             style={{ color: "#F6B829" }}
           >
-            Lunch Sponsor
+            LUNCH SPONSOR
           </span>
           <p
-            className="mt-2 text-[15px] leading-snug"
-            style={{ color: "#092936" }}
+            className="text-center font-bold leading-snug"
+            style={{ color: "#092936", fontSize: 14 }}
           >
             Lunch is sponsored by<br />
-            <span className="font-semibold">TALA Professional Services</span>
+            TALA Professional Services
           </p>
-          <div className="mt-4 w-full max-w-[200px] overflow-hidden rounded-lg">
-            <img
-              src={TALA_LOGO}
-              alt="TALA Professional Services"
-              className="w-full h-auto object-cover"
-              style={{ objectPosition: "center", transform: "scale(1.15)" }}
-              data-testid="tala-logo"
-            />
-          </div>
+          <img
+            src={TALA_LOGO}
+            alt="TALA Professional Services"
+            className="mt-2 object-contain"
+            style={{ width: 220, height: 36 }}
+            data-testid="tala-logo"
+          />
         </div>
-      </section>
+      </div>
 
-      {/* QUICK ACCESS GRID */}
-      <section className="px-5 mt-8">
-        <h2
-          className="font-display text-xl mb-4 px-1"
-          style={{ color: "#092936", fontWeight: 600 }}
+      {/* QUICK ACCESS */}
+      <div className="px-5 mt-6">
+        <p
+          className="text-[12px] font-extrabold tracking-[0.15em] uppercase mb-3"
+          style={{ color: "#145261" }}
         >
           Quick Access
-        </h2>
+        </p>
         <div className="grid grid-cols-2 gap-3">
-          <QuickTile
-            to="/agenda"
-            label="Agenda"
-            Icon={CalendarDays}
-            bg="#145261"
-            fg="#FFFFFF"
-            testid="quick-agenda"
-          />
-          <QuickTile
-            to="/group"
-            label="My Group"
-            Icon={Users}
-            bg="#F6B829"
-            fg="#092936"
-            testid="quick-group"
-          />
-          <QuickTile
-            to="/sessions"
-            label="Sessions"
-            Icon={BookOpen}
-            bg="#541011"
-            fg="#FFFFFF"
-            testid="quick-sessions"
-          />
-          <QuickTile
-            to="/locations"
-            label="Locations"
-            Icon={MapPin}
-            bg="#092936"
-            fg="#FFFFFF"
-            testid="quick-locations"
-          />
+          {quickActions.map((a) => {
+            const Icon = a.icon;
+            const dark = a.color === "#F6B829";
+            return (
+              <Link
+                key={a.label}
+                to={a.route}
+                data-testid={a.testid}
+                className="rounded-[18px] p-4 flex flex-col justify-between transition-transform active:scale-[0.97] card-shadow"
+                style={{ background: a.color, color: dark ? "#092936" : "#FFFFFF", minHeight: 100 }}
+              >
+                <Icon size={28} strokeWidth={2.2} />
+                <span className="text-base font-bold mt-2">{a.label}</span>
+              </Link>
+            );
+          })}
         </div>
-      </section>
+      </div>
 
       {/* INFO CARD */}
-      <section className="px-5 mt-8">
+      <div className="px-5 mt-6">
         <div
-          className="rounded-2xl px-6 py-7 border border-[#E8DFCF]"
-          style={{ background: "#FFFFFF" }}
+          className="bg-white rounded-2xl border flex items-start gap-2.5 p-4"
+          style={{ borderColor: "rgba(20,82,97,0.15)" }}
           data-testid="info-card"
         >
-          <h3
-            className="font-display text-2xl leading-tight"
-            style={{ color: "#092936", fontWeight: 700 }}
-          >
-            District-Wide Professional Development
-          </h3>
-          <p
-            className="mt-2 font-display text-2xl leading-tight"
-            style={{ color: "#145261", fontWeight: 600 }}
-          >
-            June 8, 2026
-          </p>
-          <p
-            className="mt-4 text-[15px] leading-relaxed"
-            style={{ color: "#3D5560" }}
-          >
-            A full day of learning, collaboration, and discovery — designed for
-            the educators who shape our youngest minds.
-          </p>
+          <Info size={22} color="#145261" strokeWidth={2.2} className="flex-shrink-0" />
+          <div className="flex-1">
+            <p className="font-bold" style={{ color: "#092936", fontSize: 14, marginBottom: 4 }}>
+              District-Wide Professional Development
+            </p>
+            <p className="font-bold" style={{ color: "#092936", fontSize: 14, marginBottom: 4 }}>
+              June 8, 2026
+            </p>
+            <p style={{ color: "#5A6A72", fontSize: 13, lineHeight: "19px" }}>
+              A full day of learning, collaboration, and discovery — designed for the educators who shape our youngest minds.
+            </p>
+          </div>
         </div>
-      </section>
-
+      </div>
       <div className="h-6" />
     </div>
-  );
-}
-
-function QuickTile({ to, label, Icon, bg, fg, testid }) {
-  return (
-    <Link
-      to={to}
-      data-testid={testid}
-      className="rounded-2xl px-5 py-6 flex flex-col items-start gap-3 transition-transform active:scale-[0.97] hover:-translate-y-0.5"
-      style={{ background: bg, color: fg, minHeight: "120px" }}
-    >
-      <div
-        className="w-10 h-10 rounded-xl flex items-center justify-center"
-        style={{ background: "rgba(255,255,255,0.18)" }}
-      >
-        <Icon size={20} strokeWidth={2.2} />
-      </div>
-      <span className="font-semibold text-base">{label}</span>
-    </Link>
   );
 }
