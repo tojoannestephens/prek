@@ -124,7 +124,7 @@ export default function Home() {
             src={TALA_LOGO}
             alt="TALA Professional Services"
             className="object-contain"
-            style={{ width: 360, maxWidth: "90%", height: 72 }}
+            style={{ width: "100%", maxWidth: 520, height: 120 }}
             data-testid="tala-logo"
           />
         </div>
