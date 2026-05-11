@@ -63,3 +63,12 @@ code {
 .card-shadow-md {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
+
+/* Hide preview-environment "Made with Emergent" badge */
+#emergent-badge,
+[id^="emergent-badge"],
+[class*="emergent-badge"],
+a[href*="emergent.sh"],
+a[href*="emergent.com"] {
+  display: none !important;
+}
