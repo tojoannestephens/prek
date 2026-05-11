@@ -18,7 +18,7 @@ export default function Home() {
       {/* HERO with image background */}
       <div
         className="relative overflow-hidden mx-0"
-        style={{ minHeight: 360, borderBottomLeftRadius: 28, borderBottomRightRadius: 28 }}
+        style={{ minHeight: 640, borderBottomLeftRadius: 28, borderBottomRightRadius: 28 }}
       >
         <img
           src={HERO_BG}
@@ -27,9 +27,9 @@ export default function Home() {
           style={{ borderBottomLeftRadius: 28, borderBottomRightRadius: 28 }}
         />
         <div
-          className="relative px-6 pt-8 pb-8 flex flex-col justify-end"
+          className="relative px-6 pt-6 pb-7 flex flex-col"
           style={{
-            minHeight: 360,
+            minHeight: 640,
             background: "rgba(9, 41, 54, 0.78)",
             borderBottomLeftRadius: 28,
             borderBottomRightRadius: 28,
@@ -43,8 +43,8 @@ export default function Home() {
             style={{
               top: 16,
               right: 16,
-              width: 72,
-              height: 72,
+              width: 80,
+              height: 80,
               background: "rgba(255,255,255,0.95)",
               borderRadius: 16,
               padding: 6,
@@ -53,25 +53,42 @@ export default function Home() {
           />
 
           <div
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full self-start mb-4"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full self-start"
             style={{ background: "#F6B829" }}
             data-testid="success-pill"
           >
-            <Star size={14} fill="#092936" strokeWidth={0} color="#092936" />
-            <span className="text-[12px] font-extrabold tracking-wider" style={{ color: "#092936" }}>
+            <Star size={16} fill="#092936" strokeWidth={0} color="#092936" />
+            <span className="text-[13px] font-extrabold tracking-wider" style={{ color: "#092936" }}>
               Success Starts Here
             </span>
           </div>
 
-          <h1 className="text-white font-extrabold mb-2" style={{ fontSize: 44, lineHeight: "48px" }} data-testid="home-headline">
+          {/* Spacer pushes title to lower half */}
+          <div className="flex-1 min-h-[60px]" />
+
+          <h1
+            className="text-white font-extrabold"
+            style={{ fontSize: 64, lineHeight: "0.95", letterSpacing: "-0.02em" }}
+            data-testid="home-headline"
+          >
             Nurture.<br />Guide.<br />Empower.
           </h1>
 
-          <p className="font-bold mb-3" style={{ color: "#F6B829", fontSize: 16 }} data-testid="home-subheadline">
+          <p
+            className="text-white font-extrabold mt-5"
+            style={{ fontSize: 18 }}
+            data-testid="home-subheadline"
+          >
             AI in Teaching &amp; Learning
           </p>
 
-          <p style={{ color: "rgba(255,255,255,0.92)", fontSize: 15, lineHeight: "22px" }} data-testid="home-welcome">
+          {/* Spacer between subtitle and welcome */}
+          <div className="h-8" />
+
+          <p
+            style={{ color: "rgba(255,255,255,0.92)", fontSize: 15, lineHeight: "22px" }}
+            data-testid="home-welcome"
+          >
             Welcome, Pre K educators! Today we explore how AI can support, inspire, and elevate early childhood teaching.
           </p>
         </div>
