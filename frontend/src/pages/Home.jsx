@@ -121,15 +121,15 @@ export default function Home() {
             TALA Professional Services
           </p>
           <div
-            className="w-full overflow-hidden"
-            style={{ maxWidth: 520, height: 70 }}
+            className="overflow-hidden"
+            style={{ width: 280, height: 44 }}
             data-testid="tala-logo-wrap"
           >
             <img
               src={TALA_LOGO}
               alt="TALA Professional Services"
               className="object-contain w-full"
-              style={{ height: 200, marginTop: -65 }}
+              style={{ height: 130, marginTop: -42 }}
               data-testid="tala-logo"
             />
           </div>
