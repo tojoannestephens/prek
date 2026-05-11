@@ -103,7 +103,7 @@ export default function Home() {
       {/* TALA SPONSOR CARD */}
       <div className="px-5 mt-6">
         <div
-          className="bg-white rounded-2xl border flex flex-col items-center justify-center py-6 px-6"
+          className="bg-white rounded-2xl border flex flex-col items-center justify-center pt-6 pb-4 px-6"
           style={{ borderColor: "rgba(20,82,97,0.15)" }}
           data-testid="tala-sponsor"
         >
@@ -114,19 +114,25 @@ export default function Home() {
             LUNCH SPONSOR
           </span>
           <p
-            className="text-center font-bold leading-snug mb-4"
+            className="text-center font-bold leading-snug mb-2"
             style={{ color: "#092936", fontSize: 15 }}
           >
             Lunch is sponsored by<br />
             TALA Professional Services
           </p>
-          <img
-            src={TALA_LOGO}
-            alt="TALA Professional Services"
-            className="object-contain"
-            style={{ width: "100%", maxWidth: 520, height: 120 }}
-            data-testid="tala-logo"
-          />
+          <div
+            className="w-full overflow-hidden"
+            style={{ maxWidth: 520, height: 70 }}
+            data-testid="tala-logo-wrap"
+          >
+            <img
+              src={TALA_LOGO}
+              alt="TALA Professional Services"
+              className="object-contain w-full"
+              style={{ height: 200, marginTop: -65 }}
+              data-testid="tala-logo"
+            />
+          </div>
         </div>
       </div>
 
