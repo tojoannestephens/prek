@@ -15,10 +15,16 @@ export default function Home() {
 
   return (
     <div data-testid="home-screen" className="pb-2">
-      {/* HERO with image background */}
+      {/* HERO with image background - full-bleed on desktop */}
       <div
-        className="relative overflow-hidden mx-0"
-        style={{ minHeight: 640, borderBottomLeftRadius: 28, borderBottomRightRadius: 28 }}
+        className="relative overflow-hidden"
+        style={{
+          minHeight: 640,
+          borderBottomLeftRadius: 28,
+          borderBottomRightRadius: 28,
+          width: "100vw",
+          marginLeft: "calc(-50vw + 50%)",
+        }}
       >
         <img
           src={HERO_BG}
