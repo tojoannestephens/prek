@@ -27,7 +27,7 @@ export default function Layout({ children }) {
     <div className="min-h-screen flex flex-col bg-[#FDFBF7]" data-testid="app-layout">
       {/* Top header bar */}
       <header
-        className="sticky top-0 z-40 px-4 py-3.5 flex items-center justify-center"
+        className="sticky top-0 z-40 px-5 py-3.5 flex items-center justify-start"
         style={{ background: headerBg, color: "#FFFFFF" }}
         data-testid="page-header"
       >
