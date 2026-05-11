@@ -18,7 +18,7 @@ export default function Home() {
       {/* HERO with image background - full-bleed on desktop */}
       <div
         className="relative overflow-hidden"
-        style={{ minHeight: 540, borderBottomLeftRadius: 28, borderBottomRightRadius: 28, width: "100vw", marginLeft: "calc(-50vw + 50%)" }}
+        style={{ minHeight: 460, borderBottomLeftRadius: 28, borderBottomRightRadius: 28, width: "100vw", marginLeft: "calc(-50vw + 50%)" }}
       >
         <img
           src={HERO_BG}
@@ -29,7 +29,7 @@ export default function Home() {
         <div
           className="relative px-6 pt-6 pb-7 flex flex-col"
           style={{
-            minHeight: 540,
+            minHeight: 460,
             background: "rgba(9, 41, 54, 0.78)",
             borderBottomLeftRadius: 28,
             borderBottomRightRadius: 28,
@@ -64,7 +64,7 @@ export default function Home() {
           </div>
 
           {/* Spacer pushes title to lower half */}
-          <div className="flex-1 min-h-[20px]" />
+          <div style={{ height: 80 }} />
 
           <h1
             className="text-white font-extrabold"
