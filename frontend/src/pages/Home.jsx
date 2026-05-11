@@ -2,8 +2,7 @@ import { Link } from "react-router-dom";
 import { Star, Calendar, Users, Sparkles, MapPin, Info } from "lucide-react";
 
 const HERO_BG = "https://images.unsplash.com/photo-1755538497211-c4ebc7cc1a94?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMHRlY2hub2xvZ3klMjBlZHVjYXRpb24lMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc3NzIzNTU2MHww&ixlib=rb-4.1.0&q=85";
-const CDW_LOGO = "https://customer-assets.emergentagent.com/job_deploy-base44/artifacts/aq96rbgz_image.png";
-const NEWLINE_LOGO = "https://customer-assets.emergentagent.com/job_deploy-base44/artifacts/vw9zpm1t_image.png";
+const TALA_LOGO = "https://customer-assets.emergentagent.com/job_deploy-base44/artifacts/4fzpi86t_tala.jpg";
 const BCS_LOGO = "https://raw.githubusercontent.com/tojoannestephens/prek/prek/frontend/assets/images/bcs-logo.png";
 
 export default function Home() {
@@ -101,12 +100,12 @@ export default function Home() {
         </div>
       </div>
 
-      {/* CDW & NEWLINE SPONSOR CARD */}
+      {/* TALA SPONSOR CARD */}
       <div className="px-5 mt-6">
         <div
           className="bg-white rounded-2xl border flex flex-col items-center justify-center py-6 px-6"
           style={{ borderColor: "rgba(20,82,97,0.15)" }}
-          data-testid="sponsor-card"
+          data-testid="tala-sponsor"
         >
           <span
             className="text-[11px] font-extrabold tracking-[0.15em] mb-1"
@@ -115,28 +114,19 @@ export default function Home() {
             LUNCH SPONSOR
           </span>
           <p
-            className="text-center font-bold leading-snug mb-5"
+            className="text-center font-bold leading-snug mb-4"
             style={{ color: "#092936", fontSize: 15 }}
           >
             Lunch is sponsored by<br />
-            CDW &amp; Newline Interactive
+            TALA Professional Services
           </p>
-          <div className="flex items-center justify-center gap-8 w-full">
-            <img
-              src={CDW_LOGO}
-              alt="CDW"
-              className="object-contain"
-              style={{ height: 44, maxWidth: 140 }}
-              data-testid="cdw-logo"
-            />
-            <img
-              src={NEWLINE_LOGO}
-              alt="Newline Interactive"
-              className="object-contain"
-              style={{ height: 30, maxWidth: 160 }}
-              data-testid="newline-logo"
-            />
-          </div>
+          <img
+            src={TALA_LOGO}
+            alt="TALA Professional Services"
+            className="object-contain"
+            style={{ width: 240, height: 44 }}
+            data-testid="tala-logo"
+          />
         </div>
       </div>
 
