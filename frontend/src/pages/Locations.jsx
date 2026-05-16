@@ -4,7 +4,7 @@ const LOCATIONS = [
   { name: "Gym", description: "Line Dancing & Group Selection (7:30–8:30 AM)", Icon: Dumbbell },
   { name: "Cafeteria", description: "Keynote, Lunch, and Technology Usage in Pre K", Icon: Utensils },
   { name: "Game Room", description: "VR & Interactives", Icon: Gamepad2 },
-  { name: "Mac Lab", description: "MagicSchool AI", Icon: Laptop },
+  { name: "Computer Lab", description: "MagicSchool AI", Icon: Laptop },
   { name: "Media Center", description: "AI Policy & Cybersecurity", Icon: ShieldCheck },
 ];
 
