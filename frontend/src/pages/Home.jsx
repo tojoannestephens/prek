@@ -89,7 +89,7 @@ export default function Home() {
             style={{ color: "rgba(255,255,255,0.92)", fontSize: 15, lineHeight: "22px" }}
             data-testid="home-welcome"
           >
-            Welcome, 9-12 educators! Today we explore how AI can support, inspire, and elevate secondary teaching.
+            Welcome, Pre K educators! Today, we explore how AI can support, inspire, and elevate early childhood teaching.
           </p>
         </div>
       </div>
