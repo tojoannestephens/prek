@@ -78,11 +78,11 @@ export default function Group() {
           <div className="flex-1 ml-3">
             <p
               className="font-extrabold tracking-[0.15em] opacity-90"
-              style={{ color: darkText ? "#092936" : "#FFFFFF", fontSize: 11 }}
+              style={{ color: "#FFFFFF", fontSize: 11 }}
             >
               {selected.bandLabel.toUpperCase()} · YOUR GROUP
             </p>
-            <p className="font-extrabold mt-0.5" style={{ color: darkText ? "#092936" : "#FFFFFF", fontSize: 20 }}>
+            <p className="font-extrabold mt-0.5" style={{ color: "#FFFFFF", fontSize: 20 }}>
               {selected.name}
             </p>
           </div>
