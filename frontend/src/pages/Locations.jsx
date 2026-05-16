@@ -5,7 +5,7 @@ const LOCATIONS = [
   { name: "Cafeteria", description: "Keynote, Lunch, and Technology Usage in Pre K", Icon: Utensils },
   { name: "Game Room", description: "VR & Interactives", Icon: Gamepad2 },
   { name: "Computer Lab", description: "MagicSchool AI", Icon: Laptop },
-  { name: "Media Center", description: "AI Policy & Cybersecurity", Icon: ShieldCheck },
+  { name: "Library", description: "AI Policy & Cybersecurity", Icon: ShieldCheck },
 ];
 
 const ACCENTS = ["#145261", "#F6B829", "#541011", "#092936", "#145261"];

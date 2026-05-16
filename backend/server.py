@@ -117,7 +117,7 @@ DEFAULT_AGENDA = [
 ]
 
 DEFAULT_SESSIONS = [
-    {"order": 1, "title": "AI Policy & Cybersecurity", "location": "Media Center",
+    {"order": 1, "title": "AI Policy & Cybersecurity", "location": "Library",
      "description": "Understand district AI usage policy, student data privacy, and practical cybersecurity habits to keep your classroom and students safe online."},
     {"order": 2, "title": "MagicSchool AI", "location": "Computer Lab",
      "description": "Hands-on workshop with MagicSchool AI tools — lesson planning, differentiation, parent communication, and time-saving classroom assistants designed for educators."},
