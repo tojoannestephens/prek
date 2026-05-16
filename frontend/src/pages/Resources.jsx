@@ -12,7 +12,7 @@ export default function Resources() {
   return (
     <div className="p-4 pb-10" data-testid="resources-screen">
       <h2 className="font-extrabold mb-1" style={{ color: "#092936", fontSize: 22 }}>
-        Resources
+        AI Online Games
       </h2>
 
       <div className="mt-5">

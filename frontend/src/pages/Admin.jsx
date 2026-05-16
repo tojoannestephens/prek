@@ -114,7 +114,7 @@ function AdminPanel() {
         {[
           { id: "agenda", label: "Agenda" },
           { id: "sessions", label: "Sessions" },
-          { id: "resources", label: "Resources" },
+          { id: "resources", label: "AI Online Games" },
         ].map((t) => {
           const active = tab === t.id;
           return (
