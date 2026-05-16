@@ -162,14 +162,14 @@ Match your band color to your group, then tap your assigned group to view your p
                   </span>
                 </div>
               </div>
-              <p className="font-extrabold mb-3" style={{ color: darkText ? "#092936" : "#FFFFFF", fontSize: 19 }}>
+              <p className="font-extrabold mb-3" style={{ color: "#FFFFFF", fontSize: 19 }}>
                 {g.name}
               </p>
               <div className="flex items-center gap-1.5">
-                <span className="font-semibold" style={{ color: darkText ? "#092936" : "#FFFFFF", fontSize: 13 }}>
+                <span className="font-semibold" style={{ color: "#FFFFFF", fontSize: 13 }}>
                   View schedule
                 </span>
-                <ArrowRight size={14} color={darkText ? "#092936" : "#FFFFFF"} />
+                <ArrowRight size={14} color="#FFFFFF" />
               </div>
             </button>
           );
