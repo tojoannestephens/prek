@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import { MapPin, BookMarked, MessageCircle, Lock, ChevronRight } from "lucide-react";
+import { MapPin, BookMarked, MessageCircle, ChevronRight } from "lucide-react";
 
 const ITEMS = [
   { label: "Locations", desc: "Find rooms and sessions", Icon: MapPin, route: "/locations", color: "#145261" },
   { label: "AI Online Learning Games", desc: "", Icon: BookMarked, route: "/resources", color: "#F6B829" },
   { label: "Feedback", desc: "Share your thoughts", Icon: MessageCircle, route: "/feedback", color: "#541011" },
-  { label: "Admin", desc: "PIN-protected editing", Icon: Lock, route: "/admin", color: "#092936" },
 ];
 
 export default function More() {
