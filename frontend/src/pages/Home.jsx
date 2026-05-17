@@ -3,7 +3,7 @@ import { Star, Calendar, Users, Sparkles, MapPin, Info } from "lucide-react";
 
 const HERO_BG = "https://images.unsplash.com/photo-1755538497211-c4ebc7cc1a94?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMHRlY2hub2xvZ3klMjBlZHVjYXRpb24lMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc3NzIzNTU2MHww&ixlib=rb-4.1.0&q=85";
 const TALA_LOGO = "https://customer-assets.emergentagent.com/job_deploy-base44/artifacts/4fzpi86t_tala.jpg";
-const BCS_LOGO = "https://raw.githubusercontent.com/tojoannestephens/prek/prek/frontend/assets/images/bcs-logo.png";
+const BCS_LOGO = "/bcs-logo.png";
 
 export default function Home() {
   const quickActions = [
