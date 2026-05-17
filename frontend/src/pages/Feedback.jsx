@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Check, Send } from "lucide-react";
+import { api } from "@/lib/api";
 
 const RATINGS = [
   { value: 1, emoji: "😞", label: "Poor" },
@@ -113,7 +114,16 @@ export default function Feedback() {
       />
 
       <button
-        onClick={() => rating && setSubmitted(true)}
+        onClick={async () => {
+          if (!rating) return;
+          try {
+            await api.post("/feedback", { rating, highlight, improve });
+          } catch (e) {
+            // Don't block the thank-you screen if backend hiccups.
+            console.log("feedback submit failed", e);
+          }
+          setSubmitted(true);
+        }}
         disabled={!rating}
         data-testid="feedback-submit"
         className="w-full flex items-center justify-center gap-2 py-4 rounded-[14px] mt-5 transition-opacity"

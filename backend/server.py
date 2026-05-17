@@ -84,6 +84,20 @@ class PinVerify(BaseModel):
     pin: str
 
 
+class Feedback(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    rating: int
+    highlight: str = ""
+    improve: str = ""
+    submitted_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+
+class FeedbackCreate(BaseModel):
+    rating: int
+    highlight: str = ""
+    improve: str = ""
+
+
 # ===== Seed Data =====
 DEFAULT_AGENDA = [
     {"order": 1, "time": "7:30–8:30 AM",
@@ -272,6 +286,39 @@ async def delete_resource(item_id: str):
 @api_router.post("/admin/verify-pin")
 async def verify_pin(payload: PinVerify):
     return {"valid": payload.pin == ADMIN_PIN}
+
+
+# ===== Feedback =====
+@api_router.post("/feedback", response_model=Feedback)
+async def submit_feedback(payload: FeedbackCreate):
+    fb = Feedback(**payload.model_dump())
+    await db.feedback.insert_one(fb.model_dump())
+    return fb
+
+
+@api_router.get("/feedback", response_model=List[Feedback])
+async def list_feedback():
+    items = await db.feedback.find({}, {"_id": 0}).sort("submitted_at", -1).to_list(1000)
+    return items
+
+
+@api_router.get("/feedback/stats")
+async def feedback_stats():
+    items = await db.feedback.find({}, {"_id": 0, "rating": 1}).to_list(10000)
+    count = len(items)
+    avg = round(sum(i["rating"] for i in items) / count, 2) if count else 0
+    dist = {str(n): 0 for n in range(1, 6)}
+    for i in items:
+        dist[str(i["rating"])] = dist.get(str(i["rating"]), 0) + 1
+    return {"count": count, "average": avg, "distribution": dist}
+
+
+@api_router.delete("/feedback/{item_id}")
+async def delete_feedback(item_id: str):
+    result = await db.feedback.delete_one({"id": item_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Feedback not found")
+    return {"deleted": True}
 
 
 # ===== Startup seeding =====

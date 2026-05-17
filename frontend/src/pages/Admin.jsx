@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
-import { Lock, Key, Edit2, Save, X } from "lucide-react";
+import { Lock, Key, Edit2, Save, X, Download, Trash2 } from "lucide-react";
 
 export default function Admin() {
   const [pin, setPin] = useState("");
@@ -108,13 +108,14 @@ function AdminPanel() {
     <div data-testid="admin-panel">
       {/* Tab bar */}
       <div
-        className="flex bg-white border-b"
+        className="flex bg-white border-b overflow-x-auto"
         style={{ borderBottomColor: "rgba(20,82,97,0.15)" }}
       >
         {[
           { id: "agenda", label: "Agenda" },
           { id: "sessions", label: "Sessions" },
-          { id: "resources", label: "AI Online Learning Games" },
+          { id: "resources", label: "Games" },
+          { id: "feedback", label: "Feedback" },
         ].map((t) => {
           const active = tab === t.id;
           return (
@@ -122,7 +123,7 @@ function AdminPanel() {
               key={t.id}
               onClick={() => setTab(t.id)}
               data-testid={`admin-tab-${t.id}`}
-              className="flex-1 py-3.5 transition-colors"
+              className="flex-1 py-3.5 transition-colors whitespace-nowrap px-2"
               style={{
                 borderBottom: active ? "3px solid #F6B829" : "3px solid transparent",
                 color: active ? "#092936" : "#5A6A72",
@@ -140,6 +141,7 @@ function AdminPanel() {
         {tab === "agenda" && <EditList kind="agenda" fields={["time", "title", "description", "location"]} />}
         {tab === "sessions" && <EditList kind="sessions" fields={["title", "location", "description"]} />}
         {tab === "resources" && <EditList kind="resources" fields={["title", "description", "url"]} />}
+        {tab === "feedback" && <FeedbackList />}
       </div>
     </div>
   );
@@ -283,5 +285,172 @@ function EditList({ kind, fields }) {
         </div>
       ))}
     </>
+  );
+}
+
+
+const EMOJI_BY_RATING = { 1: "😞", 2: "😐", 3: "🙂", 4: "😄", 5: "🤩" };
+const LABEL_BY_RATING = { 1: "Poor", 2: "Okay", 3: "Good", 4: "Great", 5: "Amazing" };
+
+function FeedbackList() {
+  const [items, setItems] = useState([]);
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const load = async () => {
+    setLoading(true);
+    try {
+      const [a, b] = await Promise.all([api.get("/feedback"), api.get("/feedback/stats")]);
+      setItems(a.data);
+      setStats(b.data);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => { load(); }, []);
+
+  const remove = async (id) => {
+    if (!window.confirm("Delete this feedback entry?")) return;
+    await api.delete(`/feedback/${id}`);
+    load();
+  };
+
+  const exportCSV = () => {
+    const rows = [
+      ["submitted_at", "rating", "highlight", "improve"],
+      ...items.map((i) => [
+        i.submitted_at,
+        i.rating,
+        (i.highlight || "").replace(/"/g, '""'),
+        (i.improve || "").replace(/"/g, '""'),
+      ]),
+    ];
+    const csv = rows.map((r) => r.map((c) => `"${c}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `feedback-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  if (loading) {
+    return <div className="flex justify-center pt-10"><div className="w-8 h-8 border-2 border-[#145261] border-t-transparent rounded-full animate-spin" /></div>;
+  }
+
+  return (
+    <div data-testid="feedback-admin">
+      {/* Stats card */}
+      <div
+        className="bg-white rounded-[14px] p-4 mb-4 border"
+        style={{ borderColor: "rgba(20,82,97,0.15)" }}
+      >
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <p className="font-extrabold" style={{ color: "#092936", fontSize: 28 }}>
+              {stats?.count ?? 0}
+            </p>
+            <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#5A6A72" }}>
+              Responses
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="font-extrabold" style={{ color: "#145261", fontSize: 28 }}>
+              {stats?.average ?? 0}<span style={{ color: "#5A6A72", fontSize: 16 }}>/5</span>
+            </p>
+            <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#5A6A72" }}>
+              Average
+            </p>
+          </div>
+        </div>
+        {/* Distribution bars */}
+        <div className="space-y-1.5">
+          {[5, 4, 3, 2, 1].map((n) => {
+            const count = stats?.distribution?.[n] ?? 0;
+            const pct = stats?.count ? (count / stats.count) * 100 : 0;
+            return (
+              <div key={n} className="flex items-center gap-2">
+                <span style={{ fontSize: 16, width: 22 }}>{EMOJI_BY_RATING[n]}</span>
+                <div className="flex-1 h-2 rounded-full" style={{ background: "#F4EFE6" }}>
+                  <div className="h-2 rounded-full" style={{ width: `${pct}%`, background: "#F6B829" }} />
+                </div>
+                <span className="font-semibold text-xs" style={{ color: "#5A6A72", width: 24, textAlign: "right" }}>
+                  {count}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+        <button
+          onClick={exportCSV}
+          disabled={!items.length}
+          data-testid="feedback-export"
+          className="mt-4 w-full flex items-center justify-center gap-2 py-2.5 rounded-[10px] font-bold"
+          style={{
+            background: "#145261",
+            color: "#FFFFFF",
+            opacity: items.length ? 1 : 0.5,
+          }}
+        >
+          <Download size={16} /> Export CSV
+        </button>
+      </div>
+
+      {/* Comments list */}
+      {items.length === 0 ? (
+        <p className="text-center py-6" style={{ color: "#5A6A72", fontSize: 14 }}>
+          No feedback submitted yet.
+        </p>
+      ) : (
+        items.map((f) => (
+          <div
+            key={f.id}
+            className="bg-white rounded-[14px] p-3.5 mb-3 border"
+            style={{ borderColor: "rgba(20,82,97,0.15)" }}
+            data-testid={`feedback-row-${f.id}`}
+          >
+            <div className="flex items-start justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <span style={{ fontSize: 24 }}>{EMOJI_BY_RATING[f.rating]}</span>
+                <div>
+                  <p className="font-bold" style={{ color: "#092936", fontSize: 14 }}>
+                    {LABEL_BY_RATING[f.rating]}
+                  </p>
+                  <p style={{ color: "#5A6A72", fontSize: 11 }}>
+                    {new Date(f.submitted_at).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => remove(f.id)}
+                className="p-1.5 rounded-lg"
+                style={{ color: "#541011" }}
+                data-testid={`feedback-delete-${f.id}`}
+              >
+                <Trash2 size={16} />
+              </button>
+            </div>
+            {f.highlight && (
+              <div className="mt-2">
+                <p className="text-[10px] font-bold tracking-wider uppercase" style={{ color: "#145261" }}>
+                  Highlight
+                </p>
+                <p style={{ color: "#092936", fontSize: 13, lineHeight: "18px" }}>{f.highlight}</p>
+              </div>
+            )}
+            {f.improve && (
+              <div className="mt-2">
+                <p className="text-[10px] font-bold tracking-wider uppercase" style={{ color: "#145261" }}>
+                  Could be better
+                </p>
+                <p style={{ color: "#092936", fontSize: 13, lineHeight: "18px" }}>{f.improve}</p>
+              </div>
+            )}
+          </div>
+        ))
+      )}
+    </div>
   );
 }
