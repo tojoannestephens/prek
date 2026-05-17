@@ -133,7 +133,7 @@ DEFAULT_RESOURCES = [
      "url": "https://quickdraw.withgoogle.com/"},
     {"order": 2, "title": "Two Truths & AI",
      "description": "An interactive digital literacy activity from Common Sense Media that challenges students to identify AI-generated content while building critical thinking and media literacy skills.",
-     "url": ""},
+     "url": "https://www.commonsense.org/two-truths-and-ai"},
     {"order": 3, "title": "Session Slide Deck", "description": "", "url": ""},
     {"order": 4, "title": "Workshop Handout PDF", "description": "", "url": ""},
     {"order": 5, "title": "Conference Padlet", "description": "", "url": ""},
