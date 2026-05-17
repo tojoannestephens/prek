@@ -131,12 +131,12 @@ DEFAULT_RESOURCES = [
     {"order": 1, "title": "Quick Draw",
      "description": "Quick, Draw! is an interactive Google AI experiment where users quickly sketch objects while a neural network attempts to guess the drawings in real time, helping demonstrate how machine learning works through fun, hands-on gameplay.",
      "url": "https://quickdraw.withgoogle.com/"},
-    {"order": 2, "title": "Two Truths & AI",
+    {"order": 2, "title": "Twin Pics",
+     "description": "Twin Pics is a daily AI image challenge where players use prompts to recreate a mystery image as closely as possible, earning higher scores based on accuracy. Because a new challenge is released each day, participants are encouraged to return daily to strengthen their AI prompting skills while learning how concise writing, detailed descriptions, and strategic word choice impact AI-generated results. It also serves as a fun classroom icebreaker that encourages creativity, collaboration, critical thinking, and discussion around how AI interprets language and prompts.",
+     "url": "https://twinpics.ai/"},
+    {"order": 3, "title": "Two Truths & AI",
      "description": "An interactive digital literacy activity from Common Sense Media that challenges students to identify AI-generated content while building critical thinking and media literacy skills.",
      "url": "https://www.commonsense.org/two-truths-and-ai"},
-    {"order": 3, "title": "Session Slide Deck", "description": "", "url": ""},
-    {"order": 4, "title": "Workshop Handout PDF", "description": "", "url": ""},
-    {"order": 5, "title": "Conference Padlet", "description": "", "url": ""},
 ]
 
 

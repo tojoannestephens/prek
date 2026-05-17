@@ -3,7 +3,7 @@ import { MapPin, BookMarked, MessageCircle, Lock, ChevronRight } from "lucide-re
 
 const ITEMS = [
   { label: "Locations", desc: "Find rooms and sessions", Icon: MapPin, route: "/locations", color: "#145261" },
-  { label: "AI Online Games", desc: "", Icon: BookMarked, route: "/resources", color: "#F6B829" },
+  { label: "AI Online Learning Games", desc: "", Icon: BookMarked, route: "/resources", color: "#F6B829" },
   { label: "Feedback", desc: "Share your thoughts", Icon: MessageCircle, route: "/feedback", color: "#541011" },
   { label: "Admin", desc: "PIN-protected editing", Icon: Lock, route: "/admin", color: "#092936" },
 ];
