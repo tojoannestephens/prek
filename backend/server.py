@@ -105,7 +105,7 @@ DEFAULT_AGENDA = [
      "description": "All groups attend. Kick off the day, get moving, and find your group!\n\nClick on My Group to determine your assigned group.",
      "location": "Gym", "type": "general"},
     {"order": 2, "time": "8:30–9:00 AM",
-     "title": "Keynote: Superintendent Dr. Mark Sullivan",
+     "title": "Keynote: Chief of Staff Dr. Terry Lamar",
      "description": "Welcome and opening keynote address.",
      "location": "Cafeteria", "type": "keynote"},
     {"order": 3, "time": "9:15–9:55 AM",
