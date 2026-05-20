@@ -96,7 +96,7 @@ export default function Group() {
         </p>
 
         {schedule.map((item, idx) => (
-          <div key={idx} className="flex items-stretch" data-testid={`rotation-${idx}`}>
+          <div key={item.time} className="flex items-stretch" data-testid={`rotation-${idx}`}>
             <div className="flex flex-col items-center pt-4" style={{ width: 22 }}>
               <div className="w-3 h-3 rounded-full" style={{ background: selected.color }} />
               {idx < schedule.length - 1 && (

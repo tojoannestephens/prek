@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { api } from "@/lib/api";
 import { Lock, Key, Edit2, Save, X, Download, Trash2 } from "lucide-react";
 
@@ -153,7 +153,7 @@ function EditList({ kind, fields }) {
   const [editingId, setEditingId] = useState(null);
   const [draft, setDraft] = useState({});
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setLoading(true);
     try {
       const r = await api.get(`/${kind}`);
@@ -161,9 +161,9 @@ function EditList({ kind, fields }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [kind]);
 
-  useEffect(() => { load(); /* eslint-disable-next-line */ }, [kind]);
+  useEffect(() => { load(); }, [load]);
 
   const startEdit = (item) => {
     setEditingId(item.id);
@@ -297,7 +297,7 @@ function FeedbackList() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setLoading(true);
     try {
       const [a, b] = await Promise.all([api.get("/feedback"), api.get("/feedback/stats")]);
@@ -306,9 +306,9 @@ function FeedbackList() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [load]);
 
   const remove = async (id) => {
     if (!window.confirm("Delete this feedback entry?")) return;
