@@ -50,8 +50,6 @@ export default function Resources() {
             <a
               key={r.id}
               href={r.url}
-              target="_blank"
-              rel="noopener noreferrer"
               data-testid={`resource-${idx}`}
               className="flex items-start gap-2.5 bg-white p-3 rounded-[10px] mb-2 border"
               style={{ borderColor: "rgba(20,82,97,0.15)" }}
