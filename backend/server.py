@@ -80,6 +80,21 @@ class ResourceUpdate(BaseModel):
     order: Optional[int] = None
 
 
+class Link(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    order: int
+    title: str
+    description: Optional[str] = ""
+    url: Optional[str] = ""
+
+
+class LinkUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    url: Optional[str] = None
+    order: Optional[int] = None
+
+
 class PinVerify(BaseModel):
     pin: str
 
@@ -282,6 +297,40 @@ async def delete_resource(item_id: str):
     return {"deleted": True}
 
 
+# ===== Links =====
+@api_router.get("/links", response_model=List[Link])
+async def get_links():
+    items = await db.links.find({}, {"_id": 0}).sort("order", 1).to_list(100)
+    return items
+
+
+@api_router.post("/links", response_model=Link)
+async def create_link(item: Link):
+    doc = item.model_dump()
+    await db.links.insert_one(doc)
+    return item
+
+
+@api_router.put("/links/{item_id}", response_model=Link)
+async def update_link(item_id: str, update: LinkUpdate):
+    update_data = {k: v for k, v in update.model_dump().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    result = await db.links.update_one({"id": item_id}, {"$set": update_data})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Link not found")
+    item = await db.links.find_one({"id": item_id}, {"_id": 0})
+    return item
+
+
+@api_router.delete("/links/{item_id}")
+async def delete_link(item_id: str):
+    result = await db.links.delete_one({"id": item_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Link not found")
+    return {"deleted": True}
+
+
 # ===== Admin =====
 @api_router.post("/admin/verify-pin")
 async def verify_pin(payload: PinVerify):
@@ -337,6 +386,10 @@ async def seed_defaults():
             docs = [Resource(**d).model_dump() for d in DEFAULT_RESOURCES]
             await db.resources.insert_many(docs)
             logger.info("Seeded resources")
+        if await db.links.count_documents({}) == 0:
+            docs = [Link(**d).model_dump() for d in DEFAULT_LINKS]
+            await db.links.insert_many(docs)
+            logger.info("Seeded links")
     except Exception as e:
         logger.warning(f"Seeding failed: {e}")
 

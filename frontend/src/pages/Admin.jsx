@@ -115,6 +115,7 @@ function AdminPanel() {
           { id: "agenda", label: "Agenda" },
           { id: "sessions", label: "Sessions" },
           { id: "resources", label: "Games" },
+          { id: "links", label: "Links" },
           { id: "feedback", label: "Feedback" },
         ].map((t) => {
           const active = tab === t.id;
@@ -141,6 +142,7 @@ function AdminPanel() {
         {tab === "agenda" && <EditList kind="agenda" fields={["time", "title", "description", "location"]} />}
         {tab === "sessions" && <EditList kind="sessions" fields={["title", "location", "description"]} />}
         {tab === "resources" && <EditList kind="resources" fields={["title", "description", "url"]} />}
+        {tab === "links" && <EditList kind="links" fields={["title", "description", "url"]} />}
         {tab === "feedback" && <FeedbackList />}
       </div>
     </div>

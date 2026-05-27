@@ -12,6 +12,7 @@ const tabs = [
 const SUBPAGES = {
   "/locations": { title: "Locations", bg: "#145261" },
   "/resources": { title: "AI Online Learning Games", bg: "#145261" },
+  "/links": { title: "Links", bg: "#145261" },
   "/feedback": { title: "Feedback", bg: "#145261" },
   "/admin": { title: "Admin", bg: "#092936" },
 };
