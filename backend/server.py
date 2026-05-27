@@ -183,6 +183,15 @@ DEFAULT_RESOURCES = [
      "url": "https://www.commonsense.org/two-truths-and-ai"},
 ]
 
+DEFAULT_LINKS = [
+    {"order": 1, "title": "Nurture.Guide.Empower. Conference Website",
+     "description": "", "url": "https://bcsit.org/"},
+    {"order": 2, "title": "PowerSchool PD",
+     "description": "", "url": "https://alsde.truenorthlogic.com/ia/empari/login/index"},
+    {"order": 3, "title": "Schoology",
+     "description": "", "url": "https://bhm.schoology.com"},
+]
+
 
 # ===== Health check =====
 @app.get("/")
