@@ -89,14 +89,12 @@ export default function Agenda() {
                       className="bg-white rounded-[8px] border overflow-hidden flex items-center justify-center"
                       style={{ borderColor: "rgba(20,82,97,0.15)", height: 32, padding: "2px 6px" }}
                     >
-                      <div className="overflow-hidden" style={{ height: 18, width: 56 }}>
-                        <img
-                          src="https://customer-assets.emergentagent.com/job_deploy-base44/artifacts/4fzpi86t_tala.jpg"
-                          alt="TALA Professional Services"
-                          className="object-contain w-full"
-                          style={{ height: 54, marginTop: -18 }}
-                        />
-                      </div>
+                      <img
+                        src="/tala-logo.png"
+                        alt="TALA Professional Services"
+                        className="object-contain"
+                        style={{ maxHeight: "100%", maxWidth: 120 }}
+                      />
                     </div>
                   </div>
                 </div>
