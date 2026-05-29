@@ -116,7 +116,7 @@ export default function Home() {
           </p>
           <div
             className="overflow-hidden flex items-center justify-center"
-            style={{ width: 280, height: 44 }}
+            style={{ width: 200, height: 32 }}
             data-testid="tala-logo-wrap"
           >
             <img
