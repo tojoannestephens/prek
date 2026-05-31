@@ -35,14 +35,19 @@ export default function Layout({ children }) {
         <h1 className="text-[17px] font-bold tracking-tight">{headerTitle}</h1>
       </header>
 
-      <main className="flex-1 pb-20 max-w-4xl mx-auto w-full" data-testid="main-content">
+      <main className="flex-1 max-w-4xl mx-auto w-full" style={{ paddingBottom: "calc(5rem + env(safe-area-inset-bottom))" }} data-testid="main-content">
         {children}
       </main>
 
       {/* Bottom tab bar */}
       <nav
         className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t"
-        style={{ borderColor: "rgba(20, 82, 97, 0.15)" }}
+        style={{
+          borderColor: "rgba(20, 82, 97, 0.15)",
+          paddingBottom: "env(safe-area-inset-bottom)",
+          transform: "translateZ(0)",
+          willChange: "transform",
+        }}
         data-testid="bottom-nav"
       >
         <div className="max-w-4xl mx-auto grid grid-cols-5">
