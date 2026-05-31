@@ -1,18 +1,30 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Star, Calendar, Users, Sparkles, MapPin, Info, Megaphone } from "lucide-react";
-import { api } from "@/lib/api";
+
+const ANNOUNCEMENTS = [
+  {
+    title: "Check-in opens at 7:30 AM",
+    body: "Come early and enjoy a morning of line dancing, scrolling, and exercise. The first 100 to arrive beginning at 7:30 am will be entered into a drawing for a cash prize.",
+  },
+  {
+    title: "Bring your charged device",
+    body: "All sessions are hands-on with AI tools — an iPad, tablet or laptop is needed if you have one.",
+  },
+  {
+    title: "Earn 12 CEUs for the Nurture. Guide. Empower. Conference",
+    body: "To earn 12 CEUs, register via PowerSchool PD (344690) and complete all assignments (Pre Lessons, Sessions, Post Lessons) in Schoology. To enroll in the Schoology course, use the access code PKMQ-QXTR-FTVKJ to enroll.",
+  },
+  {
+    title: "Need assistance during the conference",
+    body: "Find a person in an orange vest.",
+  },
+];
 
 const HERO_BG = "https://images.unsplash.com/photo-1755538497211-c4ebc7cc1a94?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMHRlY2hub2xvZ3klMjBlZHVjYXRpb24lMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc3NzIzNTU2MHww&ixlib=rb-4.1.0&q=85";
 const TALA_LOGO = "/tala-logo.png";
 const BCS_LOGO = "/bcs-logo.png";
 
 export default function Home() {
-  const [announcements, setAnnouncements] = useState([]);
-  useEffect(() => {
-    api.get("/announcements").then((r) => setAnnouncements(r.data)).catch(() => {});
-  }, []);
-
   const quickActions = [
     { label: "Agenda", icon: Calendar, route: "/agenda", color: "#145261", testid: "quick-agenda" },
     { label: "My Group", icon: Users, route: "/group", color: "#F6B829", testid: "quick-my-group" },
@@ -188,7 +200,7 @@ export default function Home() {
       </div>
 
       {/* ANNOUNCEMENTS */}
-      {announcements.length > 0 && (
+      {ANNOUNCEMENTS.length > 0 && (
         <div className="px-5 mt-6" data-testid="announcements-section">
           <div className="flex items-center gap-2 mb-3">
             <Megaphone size={18} color="#145261" strokeWidth={2.2} />
@@ -200,9 +212,9 @@ export default function Home() {
             </p>
           </div>
           <div className="space-y-2.5">
-            {announcements.map((a, i) => (
+            {ANNOUNCEMENTS.map((a, i) => (
               <div
-                key={a.id}
+                key={i}
                 className="bg-white rounded-2xl border px-4 py-3.5"
                 style={{ borderColor: "rgba(20,82,97,0.15)", borderLeft: "4px solid #F6B829" }}
                 data-testid={`announcement-${i}`}

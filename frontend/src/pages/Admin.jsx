@@ -116,7 +116,6 @@ function AdminPanel() {
           { id: "sessions", label: "Sessions" },
           { id: "resources", label: "Games" },
           { id: "links", label: "Links" },
-          { id: "announcements", label: "Announcements" },
           { id: "feedback", label: "Feedback" },
         ].map((t) => {
           const active = tab === t.id;
@@ -144,7 +143,6 @@ function AdminPanel() {
         {tab === "sessions" && <EditList kind="sessions" fields={["title", "location", "description"]} />}
         {tab === "resources" && <EditList kind="resources" fields={["title", "description", "url"]} />}
         {tab === "links" && <EditList kind="links" fields={["title", "description", "url"]} />}
-        {tab === "announcements" && <EditList kind="announcements" fields={["title", "body"]} allowAdd allowDelete />}
         {tab === "feedback" && <FeedbackList />}
       </div>
     </div>
