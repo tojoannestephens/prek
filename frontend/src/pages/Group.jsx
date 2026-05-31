@@ -11,7 +11,7 @@ const GROUPS = [
 const ROTATIONS = {
   instructional_innovators: [
     { time: "7:30–8:30 AM", session: "Line Dancing, Exercising, Music, Entertainment, and Group Selection", location: "Gym" },
-    { time: "8:30–9:00 AM", session: "Keynote: Dr. Terry Lamar", location: "Cafeteria" },
+    { time: "8:30–9:00 AM", session: "Keynote: Dr. Terry Lamar, Chief of Staff, Birmingham City Schools", location: "Cafeteria" },
     { time: "9:15–9:55 AM", session: "VR & Interactives", location: "Game Room" },
     { time: "10:10–10:50 AM", session: "MagicSchool AI", location: "Computer Lab" },
     { time: "11:05–11:45 AM", session: "AI Policy & Cybersecurity", location: "Library" },
@@ -20,7 +20,7 @@ const ROTATIONS = {
   ],
   learning_architects: [
     { time: "7:30–8:30 AM", session: "Line Dancing, Exercising, Music, Entertainment, and Group Selection", location: "Gym" },
-    { time: "8:30–9:00 AM", session: "Keynote: Dr. Terry Lamar", location: "Cafeteria" },
+    { time: "8:30–9:00 AM", session: "Keynote: Dr. Terry Lamar, Chief of Staff, Birmingham City Schools", location: "Cafeteria" },
     { time: "9:15–9:55 AM", session: "AI Policy & Cybersecurity", location: "Library" },
     { time: "10:10–10:50 AM", session: "Technology Usage in Pre K", location: "Cafeteria" },
     { time: "11:05–11:45 AM", session: "VR & Interactives", location: "Game Room" },
@@ -29,7 +29,7 @@ const ROTATIONS = {
   ],
   digital_designers: [
     { time: "7:30–8:30 AM", session: "Line Dancing, Exercising, Music, Entertainment, and Group Selection", location: "Gym" },
-    { time: "8:30–9:00 AM", session: "Keynote: Dr. Terry Lamar", location: "Cafeteria" },
+    { time: "8:30–9:00 AM", session: "Keynote: Dr. Terry Lamar, Chief of Staff, Birmingham City Schools", location: "Cafeteria" },
     { time: "9:15–9:55 AM", session: "MagicSchool AI", location: "Computer Lab" },
     { time: "10:10–10:50 AM", session: "AI Policy & Cybersecurity", location: "Library" },
     { time: "11:05–11:45 AM", session: "Technology Usage in Pre K", location: "Cafeteria" },
@@ -38,7 +38,7 @@ const ROTATIONS = {
   ],
   integration_engineers: [
     { time: "7:30–8:30 AM", session: "Line Dancing, Exercising, Music, Entertainment, and Group Selection", location: "Gym" },
-    { time: "8:30–9:00 AM", session: "Keynote: Dr. Terry Lamar", location: "Cafeteria" },
+    { time: "8:30–9:00 AM", session: "Keynote: Dr. Terry Lamar, Chief of Staff, Birmingham City Schools", location: "Cafeteria" },
     { time: "9:15–9:55 AM", session: "Technology Usage in Pre K", location: "Cafeteria" },
     { time: "10:10–10:50 AM", session: "VR & Interactives", location: "Game Room" },
     { time: "11:05–11:45 AM", session: "MagicSchool AI", location: "Computer Lab" },
@@ -113,11 +113,6 @@ export default function Group() {
               <p className="font-bold mb-1.5" style={{ color: "#092936", fontSize: 16 }}>
                 {item.session}
               </p>
-              {item.session.includes("Dr. Terry Lamar") && (
-                <p className="font-semibold mb-1.5 italic" style={{ color: "#5A6A72", fontSize: 13 }}>
-                  Chief of Staff, Birmingham City Schools
-                </p>
-              )}
               <div className="flex items-center gap-1">
                 <MapPin size={14} color={selected.color} />
                 <span className="font-semibold" style={{ color: "#5A6A72", fontSize: 13 }}>
