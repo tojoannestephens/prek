@@ -1,5 +1,5 @@
-import { NavLink, useLocation } from "react-router-dom";
-import { Home, Calendar, Users, Sparkles, Menu } from "lucide-react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Home, Calendar, Users, Sparkles, Menu, ChevronLeft } from "lucide-react";
 
 const tabs = [
   { to: "/", label: "Home", title: "Nurture. Guide. Empower.", icon: Home, testid: "tab-home" },
@@ -19,19 +19,33 @@ const SUBPAGES = {
 
 export default function Layout({ children }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const tab = tabs.find((t) => (t.to === "/" ? location.pathname === "/" : location.pathname.startsWith(t.to)));
   const sub = SUBPAGES[location.pathname];
   const headerTitle = sub?.title || tab?.title || "";
   const headerBg = sub?.bg || "#145261";
+  const showBack = !!sub;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FDFBF7]" data-testid="app-layout">
       {/* Top header bar */}
       <header
-        className="sticky top-0 z-40 px-5 py-3.5 flex items-center justify-start"
+        className="sticky top-0 z-40 px-5 py-3.5 flex items-center justify-start gap-2"
         style={{ background: headerBg, color: "#FFFFFF" }}
         data-testid="page-header"
       >
+        {showBack && (
+          <button
+            onClick={() => navigate("/more")}
+            className="-ml-1 flex items-center gap-0.5 pr-2"
+            style={{ color: "#FFFFFF" }}
+            data-testid="back-to-more"
+            aria-label="Back to More"
+          >
+            <ChevronLeft size={22} strokeWidth={2.4} />
+            <span className="text-[14px] font-semibold">More</span>
+          </button>
+        )}
         <h1 className="text-[17px] font-bold tracking-tight">{headerTitle}</h1>
       </header>
 
