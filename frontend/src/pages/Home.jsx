@@ -15,6 +15,10 @@ const ANNOUNCEMENTS = [
     body: "To earn 12 CEUs, register via PowerSchool PD (344690) and complete all assignments (Pre Lessons, Sessions, Post Lessons) in Schoology. To enroll in the Schoology course, use the access code PKMQ-QXTR-FTVKJ to enroll.",
   },
   {
+    title: "Do not leave without your book",
+    body: "Expand your learning by reading AI for Educators. You will need the book to complete your Post Lessons.",
+  },
+  {
     title: "Need assistance during the conference",
     body: "Find a person in an orange vest.",
   },
