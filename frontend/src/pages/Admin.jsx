@@ -116,7 +116,7 @@ function AdminPanel() {
           { id: "sessions", label: "Sessions" },
           { id: "resources", label: "Games" },
           { id: "links", label: "Links" },
-          { id: "announcements", label: "Reminders" },
+          { id: "announcements", label: "Announcements" },
           { id: "feedback", label: "Feedback" },
         ].map((t) => {
           const active = tab === t.id;
@@ -144,14 +144,14 @@ function AdminPanel() {
         {tab === "sessions" && <EditList kind="sessions" fields={["title", "location", "description"]} />}
         {tab === "resources" && <EditList kind="resources" fields={["title", "description", "url"]} />}
         {tab === "links" && <EditList kind="links" fields={["title", "description", "url"]} />}
-        {tab === "announcements" && <EditList kind="announcements" fields={["title", "body"]} />}
+        {tab === "announcements" && <EditList kind="announcements" fields={["title", "body"]} allowAdd allowDelete />}
         {tab === "feedback" && <FeedbackList />}
       </div>
     </div>
   );
 }
 
-function EditList({ kind, fields }) {
+function EditList({ kind, fields, allowAdd = false, allowDelete = false }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
@@ -180,11 +180,40 @@ function EditList({ kind, fields }) {
 
   const save = async () => {
     try {
-      await api.put(`/${kind}/${editingId}`, draft);
+      if (editingId === "__new__") {
+        const nextOrder = items.length ? Math.max(...items.map((i) => i.order || 0)) + 1 : 1;
+        const payload = { order: nextOrder, ...draft };
+        // Ensure required string fields are non-empty strings
+        if (!payload.title || !payload.title.trim()) {
+          alert("Title is required");
+          return;
+        }
+        await api.post(`/${kind}`, payload);
+      } else {
+        await api.put(`/${kind}/${editingId}`, draft);
+      }
       cancel();
       load();
     } catch (e) {
       console.log("save failed", e);
+      alert("Save failed. Please check your input and try again.");
+    }
+  };
+
+  const startAdd = () => {
+    setEditingId("__new__");
+    const d = {};
+    fields.forEach((f) => { d[f] = ""; });
+    setDraft(d);
+  };
+
+  const remove = async (id) => {
+    if (!window.confirm("Delete this entry? This cannot be undone.")) return;
+    try {
+      await api.delete(`/${kind}/${id}`);
+      load();
+    } catch (e) {
+      alert("Delete failed.");
     }
   };
 
@@ -194,6 +223,73 @@ function EditList({ kind, fields }) {
 
   return (
     <>
+      {allowAdd && editingId !== "__new__" && (
+        <button
+          onClick={startAdd}
+          data-testid="admin-add"
+          className="w-full mb-3 py-3 rounded-[12px] font-bold flex items-center justify-center gap-2"
+          style={{ background: "#F6B829", color: "#092936" }}
+        >
+          + Add {kind === "announcements" ? "Announcement" : "Entry"}
+        </button>
+      )}
+      {editingId === "__new__" && (
+        <div
+          className="bg-white rounded-[14px] p-3.5 mb-3 border-2"
+          style={{ borderColor: "#F6B829" }}
+        >
+          <p
+            className="font-extrabold tracking-wider mb-2"
+            style={{ color: "#7A5300", fontSize: 11 }}
+          >
+            NEW ENTRY
+          </p>
+          {fields.map((f) => (
+            <div key={f} className="mb-2">
+              <p
+                className="font-extrabold tracking-wider mb-1"
+                style={{ color: "#145261", fontSize: 10 }}
+              >
+                {f.toUpperCase()}
+              </p>
+              {(f === "description" || f === "body") ? (
+                <textarea
+                  value={draft[f] ?? ""}
+                  onChange={(e) => setDraft({ ...draft, [f]: e.target.value })}
+                  data-testid={`admin-new-field-${f}`}
+                  className="w-full p-2.5 rounded-[8px] border outline-none"
+                  style={{ borderColor: "rgba(20,82,97,0.15)", color: "#092936", fontSize: 14, minHeight: 70 }}
+                />
+              ) : (
+                <input
+                  value={draft[f] ?? ""}
+                  onChange={(e) => setDraft({ ...draft, [f]: e.target.value })}
+                  data-testid={`admin-new-field-${f}`}
+                  className="w-full p-2.5 rounded-[8px] border outline-none"
+                  style={{ borderColor: "rgba(20,82,97,0.15)", color: "#092936", fontSize: 14 }}
+                />
+              )}
+            </div>
+          ))}
+          <div className="flex gap-2.5 mt-2">
+            <button
+              onClick={cancel}
+              className="flex-1 py-3 rounded-[10px] border flex items-center justify-center gap-1.5"
+              style={{ borderColor: "rgba(20,82,97,0.15)", color: "#5A6A72", fontWeight: 700 }}
+            >
+              <X size={16} /> Cancel
+            </button>
+            <button
+              onClick={save}
+              data-testid="admin-create"
+              className="flex-1 py-3 rounded-[10px] flex items-center justify-center gap-1.5"
+              style={{ background: "#145261", color: "#FFFFFF", fontWeight: 800 }}
+            >
+              <Save size={16} color="#FFFFFF" /> Create
+            </button>
+          </div>
+        </div>
+      )}
       {items.map((item) => (
         <div
           key={item.id}
@@ -276,14 +372,26 @@ function EditList({ kind, fields }) {
                   🔗 {item.url}
                 </p>
               )}
-              <button
-                onClick={() => startEdit(item)}
-                data-testid={`admin-edit-${item.id}`}
-                className="inline-flex items-center gap-1 mt-2.5 px-3 py-1.5 rounded-[8px]"
-                style={{ background: "#E6F0F2", color: "#145261", fontWeight: 700, fontSize: 13 }}
-              >
-                <Edit2 size={14} color="#145261" /> Edit
-              </button>
+              <div className="flex items-center gap-2 mt-2.5">
+                <button
+                  onClick={() => startEdit(item)}
+                  data-testid={`admin-edit-${item.id}`}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-[8px]"
+                  style={{ background: "#E6F0F2", color: "#145261", fontWeight: 700, fontSize: 13 }}
+                >
+                  <Edit2 size={14} color="#145261" /> Edit
+                </button>
+                {allowDelete && (
+                  <button
+                    onClick={() => remove(item.id)}
+                    data-testid={`admin-delete-${item.id}`}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-[8px]"
+                    style={{ background: "#FBE7E5", color: "#541011", fontWeight: 700, fontSize: 13 }}
+                  >
+                    <Trash2 size={14} color="#541011" /> Delete
+                  </button>
+                )}
+              </div>
             </>
           )}
         </div>

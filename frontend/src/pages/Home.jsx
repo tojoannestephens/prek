@@ -196,7 +196,7 @@ export default function Home() {
               className="text-[12px] font-extrabold tracking-[0.15em] uppercase"
               style={{ color: "#145261" }}
             >
-              Reminders
+              Announcements
             </p>
           </div>
           <div className="space-y-2.5">
