@@ -162,7 +162,7 @@ DEFAULT_AGENDA = [
 
 DEFAULT_SESSIONS = [
     {"order": 1, "title": "AI Policy & Cybersecurity", "location": "Library",
-     "description": "Understand district AI usage policy, student data privacy, and practical cybersecurity habits to keep your classroom and students safe online."},
+     "description": "This session provides educators with an overview of the district's Artificial Intelligence (AI) Policy and essential cybersecurity expectations for staff. Participants will explore responsible and ethical uses of AI in teaching and learning, including guidance on acceptable classroom use, human oversight, academic integrity, and protecting student information when using AI tools. The session will also review district expectations regarding student data privacy, personally identifiable information (PII), and approved digital resources.\n\nIn addition, teachers will learn practical cybersecurity habits that help protect classrooms, devices, and district systems from online threats. Topics will include identifying phishing emails, creating strong passwords, securing student accounts, recognizing suspicious activity, and understanding common cybersecurity risks impacting schools today. By the end of the session, participants will better understand how to safely integrate AI into instruction while maintaining a secure and responsible digital learning environment for students."},
     {"order": 2, "title": "MagicSchool AI", "location": "Computer Lab",
      "description": "Hands-on workshop with MagicSchool AI tools — lesson planning, differentiation, parent communication, and time-saving classroom assistants designed for educators."},
     {"order": 3, "title": "Technology Usage in Pre K", "location": "Cafeteria",
