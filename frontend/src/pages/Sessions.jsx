@@ -63,7 +63,7 @@ export default function Sessions() {
                 </div>
               </div>
             </div>
-            <p style={{ color: "#5A6A72", fontSize: 14, lineHeight: "21px" }}>
+            <p style={{ color: "#5A6A72", fontSize: 14, lineHeight: "21px", whiteSpace: "pre-line" }}>
               {s.description}
             </p>
           </div>
