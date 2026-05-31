@@ -47,7 +47,7 @@ export default function Layout({ children }) {
             aria-label="Back to More"
           >
             <ChevronLeft size={22} strokeWidth={2.4} />
-            <span className="text-[15px] font-bold">All</span>
+            <span className="text-[15px] font-bold">More</span>
           </button>
         </div>
       )}
