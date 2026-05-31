@@ -113,6 +113,11 @@ export default function Group() {
               <p className="font-bold mb-1.5" style={{ color: "#092936", fontSize: 16 }}>
                 {item.session}
               </p>
+              {item.session.includes("Dr. Terry Lamar") && (
+                <p className="font-semibold mb-1.5 italic" style={{ color: "#5A6A72", fontSize: 13 }}>
+                  Chief of Staff, Birmingham City Schools
+                </p>
+              )}
               <div className="flex items-center gap-1">
                 <MapPin size={14} color={selected.color} />
                 <span className="font-semibold" style={{ color: "#5A6A72", fontSize: 13 }}>
