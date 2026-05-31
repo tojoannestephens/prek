@@ -34,20 +34,23 @@ export default function Layout({ children }) {
         style={{ background: headerBg, color: "#FFFFFF" }}
         data-testid="page-header"
       >
-        {showBack && (
+        <h1 className="text-[17px] font-bold tracking-tight">{headerTitle}</h1>
+      </header>
+
+      {showBack && (
+        <div className="max-w-4xl mx-auto w-full px-4 pt-4" data-testid="back-row">
           <button
             onClick={() => navigate("/more")}
-            className="-ml-1 flex items-center gap-0.5 pr-2"
-            style={{ color: "#FFFFFF" }}
+            className="inline-flex items-center gap-0.5"
+            style={{ color: "#145261" }}
             data-testid="back-to-more"
             aria-label="Back to More"
           >
             <ChevronLeft size={22} strokeWidth={2.4} />
-            <span className="text-[14px] font-semibold">More</span>
+            <span className="text-[15px] font-bold">All</span>
           </button>
-        )}
-        <h1 className="text-[17px] font-bold tracking-tight">{headerTitle}</h1>
-      </header>
+        </div>
+      )}
 
       <main className="flex-1 max-w-4xl mx-auto w-full" style={{ paddingBottom: "calc(5rem + env(safe-area-inset-bottom))" }} data-testid="main-content">
         {children}
