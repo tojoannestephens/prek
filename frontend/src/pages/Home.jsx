@@ -196,7 +196,7 @@ export default function Home() {
               className="text-[12px] font-extrabold tracking-[0.15em] uppercase"
               style={{ color: "#145261" }}
             >
-              Announcements
+              Reminders
             </p>
           </div>
           <div className="space-y-2.5">
@@ -207,14 +207,6 @@ export default function Home() {
                 style={{ borderColor: "rgba(20,82,97,0.15)", borderLeft: "4px solid #F6B829" }}
                 data-testid={`announcement-${i}`}
               >
-                {a.badge && (
-                  <span
-                    className="inline-block font-extrabold uppercase tracking-wider px-2 py-[2px] rounded-full mb-1.5"
-                    style={{ background: "#FDF4DC", color: "#7A5300", fontSize: 10 }}
-                  >
-                    {a.badge}
-                  </span>
-                )}
                 <h3
                   className="font-bold leading-snug"
                   style={{ color: "#092936", fontSize: 15 }}
