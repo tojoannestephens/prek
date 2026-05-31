@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { api } from "@/lib/api";
-import { Lock, Key, Edit2, Save, X, Download, Trash2 } from "lucide-react";
+import { Lock, Key, Edit2, Save, X, Download, Trash2, ChevronUp, ChevronDown } from "lucide-react";
 
 export default function Admin() {
   const [pin, setPin] = useState("");
@@ -144,14 +144,14 @@ function AdminPanel() {
         {tab === "sessions" && <EditList kind="sessions" fields={["title", "location", "description"]} />}
         {tab === "resources" && <EditList kind="resources" fields={["title", "description", "url"]} />}
         {tab === "links" && <EditList kind="links" fields={["title", "description", "url"]} />}
-        {tab === "announcements" && <EditList kind="announcements" fields={["title", "body"]} allowAdd allowDelete />}
+        {tab === "announcements" && <EditList kind="announcements" fields={["title", "body"]} allowAdd allowDelete allowReorder />}
         {tab === "feedback" && <FeedbackList />}
       </div>
     </div>
   );
 }
 
-function EditList({ kind, fields, allowAdd = false, allowDelete = false }) {
+function EditList({ kind, fields, allowAdd = false, allowDelete = false, allowReorder = false }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
@@ -214,6 +214,22 @@ function EditList({ kind, fields, allowAdd = false, allowDelete = false }) {
       load();
     } catch (e) {
       alert("Delete failed.");
+    }
+  };
+
+  const move = async (index, direction) => {
+    const swapWith = index + direction;
+    if (swapWith < 0 || swapWith >= items.length) return;
+    const a = items[index];
+    const b = items[swapWith];
+    try {
+      await Promise.all([
+        api.put(`/${kind}/${a.id}`, { order: b.order }),
+        api.put(`/${kind}/${b.id}`, { order: a.order }),
+      ]);
+      load();
+    } catch (e) {
+      alert("Reorder failed.");
     }
   };
 
@@ -290,7 +306,7 @@ function EditList({ kind, fields, allowAdd = false, allowDelete = false }) {
           </div>
         </div>
       )}
-      {items.map((item) => (
+      {items.map((item, idx) => (
         <div
           key={item.id}
           className="bg-white rounded-[14px] p-3.5 mb-3 border"
