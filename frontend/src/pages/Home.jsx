@@ -4,7 +4,7 @@ import { Star, Calendar, Users, Sparkles, MapPin, Info, Megaphone } from "lucide
 const ANNOUNCEMENTS = [
   {
     title: "Check-in opens at 7:30 AM",
-    body: "Come early and enjoy a morning of line dancing, scrolling, and exercise. The first 100 to arrive beginning at 7:30 am will be entered into a drawing for a cash prize.",
+    body: "Come early and enjoy a morning of line dancing, scrolling, and exercise. The first 100 to arrive between 7:30 am and 8:00 am will be entered into a drawing for a cash prize.",
   },
   {
     title: "Bring your charged device",
