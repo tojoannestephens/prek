@@ -1,11 +1,18 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Star, Calendar, Users, Sparkles, MapPin, Info } from "lucide-react";
+import { Star, Calendar, Users, Sparkles, MapPin, Info, Megaphone } from "lucide-react";
+import { api } from "@/lib/api";
 
 const HERO_BG = "https://images.unsplash.com/photo-1755538497211-c4ebc7cc1a94?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMHRlY2hub2xvZ3klMjBlZHVjYXRpb24lMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc3NzIzNTU2MHww&ixlib=rb-4.1.0&q=85";
 const TALA_LOGO = "/tala-logo.png";
 const BCS_LOGO = "/bcs-logo.png";
 
 export default function Home() {
+  const [announcements, setAnnouncements] = useState([]);
+  useEffect(() => {
+    api.get("/announcements").then((r) => setAnnouncements(r.data)).catch(() => {});
+  }, []);
+
   const quickActions = [
     { label: "Agenda", icon: Calendar, route: "/agenda", color: "#145261", testid: "quick-agenda" },
     { label: "My Group", icon: Users, route: "/group", color: "#F6B829", testid: "quick-my-group" },
@@ -179,6 +186,55 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* ANNOUNCEMENTS */}
+      {announcements.length > 0 && (
+        <div className="px-5 mt-6" data-testid="announcements-section">
+          <div className="flex items-center gap-2 mb-3">
+            <Megaphone size={18} color="#145261" strokeWidth={2.2} />
+            <p
+              className="text-[12px] font-extrabold tracking-[0.15em] uppercase"
+              style={{ color: "#145261" }}
+            >
+              Announcements
+            </p>
+          </div>
+          <div className="space-y-2.5">
+            {announcements.map((a, i) => (
+              <div
+                key={a.id}
+                className="bg-white rounded-2xl border px-4 py-3.5"
+                style={{ borderColor: "rgba(20,82,97,0.15)", borderLeft: "4px solid #F6B829" }}
+                data-testid={`announcement-${i}`}
+              >
+                {a.badge && (
+                  <span
+                    className="inline-block font-extrabold uppercase tracking-wider px-2 py-[2px] rounded-full mb-1.5"
+                    style={{ background: "#FDF4DC", color: "#7A5300", fontSize: 10 }}
+                  >
+                    {a.badge}
+                  </span>
+                )}
+                <h3
+                  className="font-bold leading-snug"
+                  style={{ color: "#092936", fontSize: 15 }}
+                >
+                  {a.title}
+                </h3>
+                {a.body && (
+                  <p
+                    className="mt-1 text-[14px] leading-relaxed"
+                    style={{ color: "#5A6A72" }}
+                  >
+                    {a.body}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="h-6" />
     </div>
   );

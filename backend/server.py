@@ -95,6 +95,21 @@ class LinkUpdate(BaseModel):
     order: Optional[int] = None
 
 
+class Announcement(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    order: int
+    title: str
+    body: Optional[str] = ""
+    badge: Optional[str] = ""  # e.g. "NEW", "UPDATE", "REMINDER"
+
+
+class AnnouncementUpdate(BaseModel):
+    title: Optional[str] = None
+    body: Optional[str] = None
+    badge: Optional[str] = None
+    order: Optional[int] = None
+
+
 class PinVerify(BaseModel):
     pin: str
 
@@ -190,6 +205,15 @@ DEFAULT_LINKS = [
      "description": "", "url": "https://alsde.truenorthlogic.com/ia/empari/login/index"},
     {"order": 3, "title": "Schoology",
      "description": "", "url": "https://bhm.schoology.com"},
+]
+
+DEFAULT_ANNOUNCEMENTS = [
+    {"order": 1, "badge": "REMINDER",
+     "title": "Check-in opens at 7:30 AM",
+     "body": "Pick up your colored band in the gym to find your assigned group for the day."},
+    {"order": 2, "badge": "NEW",
+     "title": "Bring your charged device",
+     "body": "Most sessions are hands-on with AI tools — a tablet or laptop is recommended but not required."},
 ]
 
 
@@ -340,6 +364,40 @@ async def delete_link(item_id: str):
     return {"deleted": True}
 
 
+# ===== Announcements =====
+@api_router.get("/announcements", response_model=List[Announcement])
+async def get_announcements():
+    items = await db.announcements.find({}, {"_id": 0}).sort("order", 1).to_list(100)
+    return items
+
+
+@api_router.post("/announcements", response_model=Announcement)
+async def create_announcement(item: Announcement):
+    doc = item.model_dump()
+    await db.announcements.insert_one(doc)
+    return item
+
+
+@api_router.put("/announcements/{item_id}", response_model=Announcement)
+async def update_announcement(item_id: str, update: AnnouncementUpdate):
+    update_data = {k: v for k, v in update.model_dump().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    result = await db.announcements.update_one({"id": item_id}, {"$set": update_data})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Announcement not found")
+    item = await db.announcements.find_one({"id": item_id}, {"_id": 0})
+    return item
+
+
+@api_router.delete("/announcements/{item_id}")
+async def delete_announcement(item_id: str):
+    result = await db.announcements.delete_one({"id": item_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Announcement not found")
+    return {"deleted": True}
+
+
 # ===== Admin =====
 @api_router.post("/admin/verify-pin")
 async def verify_pin(payload: PinVerify):
@@ -399,6 +457,10 @@ async def seed_defaults():
             docs = [Link(**d).model_dump() for d in DEFAULT_LINKS]
             await db.links.insert_many(docs)
             logger.info("Seeded links")
+        if await db.announcements.count_documents({}) == 0:
+            docs = [Announcement(**d).model_dump() for d in DEFAULT_ANNOUNCEMENTS]
+            await db.announcements.insert_many(docs)
+            logger.info("Seeded announcements")
     except Exception as e:
         logger.warning(f"Seeding failed: {e}")
 
